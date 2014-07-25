@@ -12,10 +12,10 @@ module M3TableAdmin
         elsif params[:layout] == "iframe"
           "iframe"
         else
-          "table_admin/application"
+          "m3_table_admin/application"
         end
       else
-        "table_admin/application"
+        "m3_table_admin/application"
       end
     end
 
