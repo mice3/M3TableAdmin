@@ -1,0 +1,65 @@
+= form_tag "#", :method => :post, :class => "blank" do |f|
+  %table#tableAdmin
+    %thead
+      %tr
+        - if table.show_ids
+          %th.id
+            ID
+        - table.index_columns.each do |column|
+          %th
+            = t("globals.#{column["name"]}")
+        %th.buttons
+
+    %tbody
+      - objects.each do |object|
+        - edit_path = "#"
+
+        - if table.enable_edit
+          - edit_path = send("edit_m3_table_admin_"+ (table.singularized) +"_path", object)
+        - else
+          - edit_path = send("m3_table_admin_"+ (table.singularized) +"_path", object)
+
+        %tr
+          - if table.show_ids
+            %td
+              = object.id
+
+          = hidden_field_tag "id[]", object.id
+
+          - index = 0
+          - table.index_columns.each do |column|
+            %td
+              - if "autocomplete" == column["type"]
+                - associated_object = object.send(column["attributes"]["class_name"])
+                - if associated_object
+                  - column_value = associated_object[column["attributes"]["select"]]
+                - else
+                  - column_value = ""
+              - else
+                - column_value = object.send(column["name"])
+                - if "timestamp" == column["type"]
+                  - if column_value
+                    - column_value = l column_value, :format => column["attributes"]["format"]
+                  - else
+                    - column_value = ""
+              - if index == 0
+                - if !column_value
+                  - column_value = "[No name]"
+
+                = link_to column_value, edit_path
+              - else
+                = column_value
+
+            - index += 1
+
+
+          %td.buttons
+            - if table.enable_edit
+              = link_to edit_path, :class => "btn btn-default btn-xs" do
+                %i.glyphicon.glyphicon-pencil
+                = t("globals.edit")
+
+            - if table.enable_destroy
+              = link_to [:m3_table_admin, object], :method => :delete, :data => { :confirm => t("globals.confirm_delete") }, :class => "btn btn-default btn-danger btn-xs" do
+                %i.glyphicon.glyphicon-trash
+                = t("globals.destroy")

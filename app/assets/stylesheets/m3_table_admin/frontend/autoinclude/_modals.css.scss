@@ -1,0 +1,313 @@
+@import "../base";
+@import "../mixins";
+@import "bootstrap/mixins";
+
+.modal-backdrop.in {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+
+.modal.narrow {
+  .lost-password-link {
+    float: right;
+    display: block;
+    text-decoration: underline;
+    margin-top: - ($default-padding * 3) + 1px;
+    position: relative;
+    z-index: 10;
+  }
+  .btn-lg {
+    background-color: $color-green;
+    text-transform: uppercase;
+    padding: $defaultPadding * 2;
+    font-size: 12px;
+    line-height: 12px;
+
+    i {
+      font-size: 170%;
+      vertical-align: bottom;
+      margin-top: -20px;
+      margin-bottom:-5px;
+      display: inline-block;
+    }
+
+    &:hover {
+      color: white;
+    }
+  }
+  .right-container {
+    padding-top: ($defaultPadding * 2) - 2px;
+    a {
+      color: $color-red;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+  .sign-up-link, .lost-password-link {
+    color: $color-gray-modal;
+    text-decoration: underline;
+  }
+
+  .row-oauths {
+
+
+
+    .bg-color-fb {
+      background-color: $bg-color-fb;
+      &:hover {
+        background-color: darken($bg-color-fb, 10%) !important;
+      }
+    }
+    .bg-color-gplus {
+      background-color: $bg-color-gplus;
+      &:hover {
+        background-color: darken($bg-color-gplus, 10%) !important;
+      }
+    }
+    .description {
+      margin: ($default-padding * 2) 0 ($default-padding * 2);
+      padding-top: $default-padding * 2
+    }
+    .description span {
+      position: relative;
+      top: -8px;
+      padding: 10px;
+      background: #fff;
+    }
+    .description:before {
+      display: block;
+      content: "";
+      width: 100%;
+      border-top: $color-light-gray 1px solid;
+    }
+
+    .btn-block + .btn-block {
+      margin-top: $defaultPadding;
+    }
+  }
+
+  // register modal
+
+  .form-group.boolean {
+    margin-bottom: $default-padding !important;
+    margin-top: -$default-padding !important;
+    // position: relative;
+    // label {
+    //   @extend .col-sm-12;
+    //   text-align: left;
+    //   margin-left: $default-padding * 2;
+    //   float: left;
+    //   abbr {
+    //     float:left;
+    //     margin-right:3px;
+    //   }
+    // }
+    // .col-sm-10 { // checkbox input is on right side by default
+    //   position: absolute!important;
+    //   top: 6px;
+    //   width: 20px!important;
+    // }
+  }
+}
+
+
+
+
+// wide  - we want it is as wide as possible - we want that it behaves like
+.modal.wide {
+  padding: $defaultPadding * 2 !important;
+  text-align: left;
+  .modal-dialog {
+    @extend .container;
+    max-width: 900px;
+  }
+
+  &.hide-close-button {
+    .modal-header {
+      display: none !important;
+    }
+  }
+
+}
+// narrow modal
+.modal.narrow {
+  .modal-dialog {
+
+    text-align: center;
+
+    max-width: 400px;
+
+    // modal should be centered even on xs devices
+    margin-left: auto!important;
+    margin-right: auto!important;
+
+    color: $color-gray-modal;
+
+    form {
+      display: inline-block;
+      width: 100%;
+
+
+      .label-container {
+        display: none;
+      }
+      .input-container { // rewrite default simple form value
+        @extend .col-sm-12;
+      }
+      .btn, .input-container-with-left-margin {
+        margin-left: 0;
+      }
+
+
+      .form-group {
+        @extend .row;
+        margin-bottom: $defaultPadding * 2;
+
+        // &.boolean {
+        //   text-align: left;
+        //   label {
+        //     margin-bottom: 0;
+        //     display: inline;
+        //     font-weight: normal;
+        //   }
+        // }
+      }
+
+
+      input.text,input.email,input.password {
+        width: 100%;
+        max-width: 100%;
+        border-width: 0;
+        background: $color-gray-light;
+        padding: 15px;
+
+        // @extend .box-shadow-none
+      }
+      input.boolean {
+        display: inline-block;
+        margin-top: 0;
+        height: 14px;
+        vertical-align: top;
+        margin-bottom: 0;
+        margin-right: $default-padding;
+        margin-top:2px;
+      }
+      .input-container-with-left-margin {
+        text-align: left;
+        label {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          abbr {
+            display: none;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.modal {
+
+  overflow-y: auto!important;
+  font-size: 13px;
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: $defaultPadding * 3 + 7px;;
+    font-size: 320%;
+    text-align: center;
+  }
+  .modal-dialog {
+    margin-top: $defaultPadding * 9;
+  }
+  .modal-header {
+    border-bottom: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 0;
+    height: 0;
+    button.close {
+      margin-top: -($defaultPadding * 4 + 5);
+      padding: 7px 15px 7px 37px;
+      font-size: 16px;
+      color: $color-dark;
+      background: #fff;
+      position: absolute;
+      right: 0;
+      @include border-radius(50px);
+      @include opacity(100);
+      @include transition(300ms);
+      font-family: $default-title-font;
+      font-weight: 100;
+      text-shadow: none;
+      &:hover {
+        background: $color-dark;
+        color: #fff;
+      }
+      span.close-char {
+        font-size: 130%;
+        position: absolute;
+        margin-top: -4px;
+        margin-left: -22px;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: ($defaultPadding * 3) ($defaultPadding * 4);
+    // padding: $defaultPadding;
+    h1 {
+      font-weight: 300;
+      color: $color-dark;
+    }
+
+    .content {
+      margin-bottom: $default-padding * 2;
+    }
+
+  }
+
+  .modal-benefits {
+    display: none !important;
+  }
+
+  .benefit-1 {
+    position: absolute;
+    top: -30px;
+    left: -210px;
+  }
+
+  .benefit-2 {
+    position: absolute;
+    top: 40px;
+    right: -200px;
+    z-index: -1;
+  }
+
+  .benefit-3 {
+    position: absolute;
+    bottom: 20px;
+    left: -240px;
+  }
+
+  form {
+    background-color: white;
+    padding: 0;
+
+  }
+  h1 {
+    font-weight: $default-title-font;
+  }
+
+}
+
+.modal-content {
+  @include border-radius(3px);
+}
+
+
+
+
+
+

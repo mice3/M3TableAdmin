@@ -1,0 +1,265 @@
+@import "base";
+@import "bootstrap/mixins";
+@import "mixins";
+
+// default form
+
+.btn .x {
+  font-style: normal;
+  font-size: 130%;
+  display: inline-block;
+  margin-top: -4px;
+}
+
+
+form {
+  font-family: $default-title-font;
+  label {
+    font-weight: normal;
+  }
+
+  .btn {
+    // margin-right: $default-padding;
+  }
+
+  .buttons-container {
+    overflow: auto;
+    // background-color: $color-dark-orange;
+    .btn {
+      float:right;
+    }
+  }
+  .input-container {
+    select.datetime {
+      max-width: 100px;
+      display: inline-block;
+    }
+  }
+
+
+  .form-group.datetime {
+    select:nth-child(4), select:nth-child(5), select:nth-child(6){
+      width: 60px;
+    }
+  }
+
+
+
+  // span.error {
+  //   padding-left: $defaultPadding;
+  // }
+  $input-height: 50px;
+
+  input.string, input.numeric, input.file, input.password, input[type=text], .input-container input.string, .input-container input.password{
+    @extend .form-control;
+    @extend .box-shadow-none;
+    height:$input-height;
+    max-width:300px;
+    border: 1px solid $color-light-gray-3;
+    $padding: $defaultPadding * 2 + 5px;
+    // padding-top: $padding; # do not do this - else it numeric fields will not work in administraion
+    // padding-bottom: $padding;
+  }
+
+  select {
+    border: 1px solid $color-light-gray-3;
+    height: 40px; line-height: 40px;
+    line-height: 15px;
+
+  }
+
+
+  textarea.text {
+    height:200px;
+  }
+  .input-container {
+    input.boolean, input.check_boxes {
+      box-sizing: border-box;
+      width: auto;
+      height: auto;
+      margin-top: 10px;
+    }
+    input.check_boxes {
+      margin-top: 3px;
+    }
+    label.check_boxes {
+      background: transparent;
+      @extend .box-shadow-none;
+      border: none;
+      padding-left: 0;
+    }
+
+  }
+
+  .field_with_errors {
+    span.error {
+      color: red;
+    }
+  }
+}
+
+.browser-firefox {
+  form {
+    input.string, input.numeric, input.file, input.password, input[type=text], .input-container input.string, .input-container input.password {
+      padding-top: 10px;
+    }
+    select {
+      height: 47px; //line-height: 46px;
+      padding: 15px 4px!important;
+      font-size: 14px;
+    }
+  }
+}
+
+form {
+  // padding: $default-padding;
+  select.date {
+    width: 90px;
+    float: left;
+    margin-right: $default-padding;
+    text-align: center;
+    &:nth-child(2) {
+      width: 100px;
+    }
+  }
+  .input-container, .label-container {
+    @extend .col-sm-12;
+  }
+
+  &.form-inline {
+
+    position: relative;
+    $width: 130px;
+    padding-bottom: $default-padding;
+    .form-controls {
+      margin-right: $width + 20px;
+      input, select {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: $default-padding;
+      }
+    }
+    .form-group {
+      display: block;
+    }
+    .form-actions {
+      position:absolute;
+      top: 0;
+      right: 0;
+
+      width: $width;
+      .btn {
+        width: 100%;
+        padding: 15px 0;
+      }
+    }
+    input, input.string, input.form-control, button {
+      display: block;
+    }
+
+  }
+
+  &.form-horizontal {
+    .label-container {
+      @extend .col-sm-2;
+
+      text-align: right;
+      padding-top: 7px;
+
+    }
+    .input-container {
+      @extend .col-sm-10;
+
+      input, select {
+        @extend .form-control;
+        @extend .box-shadow-none;
+      }
+
+      input[type=radio] {
+        width:20px;
+
+        display: inline-block;
+        margin-bottom:-3px;
+        vertical-align: bottom;
+        height:25px;
+      }
+    }
+
+    .input-container-with-left-margin {
+      abbr {
+        display: none;
+      }
+      input {
+        margin-right: 5px;
+      }
+    }
+
+    .input-container-with-left-margin, span.hint, .form-actions, .error-container, .errors{
+      @extend .col-sm-offset-2;
+      padding-left: $default-padding;
+      .btn {
+        margin-left:-6px;
+      }
+    }
+    .form-actions {
+      padding-left: $default-padding;
+    }
+  }
+
+
+  span.hint {
+    display: block;
+    padding-top: 3px;
+    clear:both;
+    margin-left: $default-padding;
+  }
+
+
+  .btn-block {
+    margin-left: 0;
+  }
+
+
+  div.errors {
+    clear: both;
+    padding-top:3px;
+    font-size: 90%;
+  }
+  // errors
+  div.error {
+    color: $color-red;
+    text-align: left;
+    padding-left: $default-padding;
+  }
+  input.error {
+    border-color: $color-red !important;
+
+  }
+
+
+  .form-group {
+    @extend .row;
+  }
+
+}
+
+form.blank {
+  padding: 0;
+  background-color: transparent;
+  margin: 0;
+}
+
+.three_nine_ratio_form {
+  .label-container {
+    @extend .col-sm-3;
+  }
+  .input-container {
+    @extend .col-sm-9;
+  }
+  div.errors {
+    @extend .col-sm-offset-3;
+  }
+}
+
+
+

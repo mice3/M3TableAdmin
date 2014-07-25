@@ -1,0 +1,72 @@
+@import "table_admin/frontend/base";
+
+
+#filters {
+  background: #eee;
+  form.narrow {
+    width: 500px;
+    margin: 0 auto;
+  }
+  margin-bottom: $default-padding * 2;
+}
+
+form {
+  background: #eee;
+  padding: $default-padding * 2;
+  padding-bottom: $default-padding;
+  margin: 0 0 20px;
+  overflow: auto;
+
+  textarea.simple-text-area {
+    resize: none;
+    height: 296px;
+  }
+
+  button.btn {
+    $p: 15px;
+    padding-top: $p - 1px;
+    padding-bottom: $p;
+  }
+
+  &.form-inline {
+    .form-actions {
+      margin-top: $default-padding * 2;
+      margin-right: $default-padding * 2;
+      button.btn {
+        padding-top: 13px;
+        padding-bottom: 13px;
+      }
+    }
+  }
+
+}
+
+
+form fieldset{
+  background-color: #eee;
+  padding: 10px;
+  h3 {
+    margin-top: 0;
+  }
+  padding-bottom: 0;
+  margin-bottom: 10px;
+}
+form .hint {
+  display:none!important;
+}
+
+
+.browser-firefox {
+  form {
+    select {
+      height: 49px; line-height: 46px;
+      padding: 14px 4px!important;
+    }
+    input.string, input.numeric, input.file, input.password, input[type=text], .input-container input.string, .input-container input.password {
+      padding-top: 5px;
+    }
+
+  }
+}
+
+

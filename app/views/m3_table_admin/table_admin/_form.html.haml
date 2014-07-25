@@ -1,0 +1,83 @@
+- if defined?(@object.has_globalize) && @object.has_globalize
+  %nav.locales.float-right
+    = link_to t('globals.edit'), '#', class: 'btn btn-primary edit-form active'
+    - (Settings['locales'] - %w(en)).each do |locale|
+      = link_to locale, '#', class: 'btn btn-primary', data: { locale: locale }
+
+= simple_form_for [:m3_table_admin, @object], html:{ class: "form-horizontal"} do |f|
+  .form-inputs
+    - if defined?(@object.has_globalize) && @object.has_globalize
+      - (Settings['locales'] - %w(en)).each do |locale|
+        %div{class: "locale-#{locale}"}
+          %h3= t("admin.offer.form.translation_locale", locale_name: I18n.backend.translate(locale, "locale_name"))
+          - @object.class.translated_attribute_names.each do |attr|
+            - next if attr == :slug || attr == :search_vector
+            - klass = @object.class.columns_hash[attr.to_s].sql_type == 'text' ? 'text' : 'string'
+            %span.input.optional{class: klass}
+              %label.optional.control-label{class: klass} #{attr.to_s.humanize}
+              - if klass == 'text'
+                = f.template.text_area_tag "#{@object.class.to_s.underscore.downcase}[attribute_translations][#{locale}][#{attr}]", @object.attribute_translation(attr, locale.to_sym), class: "optional #{klass}"
+              - else
+                = f.template.text_field_tag "#{@object.class.to_s.underscore.downcase}[attribute_translations][#{locale}][#{attr}]", @object.attribute_translation(attr, locale.to_sym), class: "optional #{klass}"
+
+  .form-inputs.edit-form
+    - if @table.filter_locale?
+      = hidden_field_tag @table.singularized + "[locale]", @table.filter_locale
+    - @table.form_columns.each do |column|
+      - if column == "country"
+        = f.input :country, {:iso_codes => true}
+      - if "text" == column["type"]
+        = f.input column["name"]
+      - elsif "wysihtml5" == column["type"]
+        = f.input column["name"], as: :text
+
+        :javascript
+          $("##{@table.singularized+"_"+column['name']}").wysihtml5();
+      - elsif "checkbox" == column["type"]
+        = f.input column["name"], as: :check_boxes, collection: column["attributes"]["collection"]
+      - elsif "dropdown" == column["type"]
+        - if column["attributes"].has_key?("label_method")
+          = f.input column["name"], collection: column["attributes"]["collection"], label_method: lambda { |obj| obj[column["attributes"]["label_method"]] }, value_method: lambda { |obj| obj[column["attributes"]["value_method"]] }
+        - else
+          = f.input column["name"], collection: column["attributes"]["collection"], prompt: column["attributes"]["prompt"]
+      - elsif "country" == column["type"]
+        = f.input column["name"], {:iso_codes => true}
+      - elsif "image" == column["type"] && @object.image?
+        .input-container-with-left-margin
+          =image_tag @object.image, :style => "max-width: 200px;margin-bottom:20px"
+      - elsif "autocomplete" == column["type"]
+        - au_type = column["attributes"]["class_name"]
+        - au_select = column["attributes"]["select"]
+        :javascript
+          $(function() {
+            $( "#autocomplete_#{column['name'].to_s}_input" ).autocomplete({
+              source: "#{admin_autocomplete_path}?type=#{au_type}&select=#{au_select}",
+              minLength: 2,
+              change: function(event,ui){
+                console.log(ui);
+                $(this).val((ui.item ? ui.item.value : ""));
+                $("##{@object.class.to_s.underscore.downcase}_#{column['name'].to_sym}_id").val((ui.item ? ui.item.id : ""));
+
+              },   //HERE - make sure to add the comma after your select
+                response: function(event, ui) {
+                  if (!ui.content.length) {
+                    var noResult = { value:"",label:"No results found" };
+                    ui.content.push(noResult);
+                  }
+                }
+            });
+          });
+        - @relation_object = @object.send("#{column['name']}")
+        - if @relation_object
+          - @relation_object_value = @relation_object.send("#{au_select}")
+        - else
+          - @relation_object_value = ""
+
+        = f.hidden_field "#{column['name'].to_sym}_id"
+        = f.input "autocomplete_#{column['name'].to_s}_input", :input_html => { :value => @relation_object_value }, :label => "#{column['name'].to_s.humanize}", :placeholder => "#{column['name'].to_s.humanize}", as: :fake
+
+
+    .form-actions
+      %button{:type => "submit", :class => "btn btn-primary btn-lg"}
+        = t("globals.submit")
+

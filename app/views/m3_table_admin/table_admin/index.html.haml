@@ -1,0 +1,86 @@
+- if (@table.filter_status? && "deleted" == @table.filter_status )
+  - @table.enable_destroy = false
+
+- if @table.row_has_locale or @table.filter_statuses?
+  .row
+    .col-sm-12.btn-groups
+      - if @table.row_has_locale
+        .btn-group.locale-btn-group
+          - (Settings['locales']).each do |locale|
+            = link_to locale, send("m3_table_admin_"+ (@table.model) +"_path", params.merge(:filter_locale => locale)), class: 'btn btn-default' + (@table.filter_locale == locale ? " active" : "")
+
+      - if @table.filter_statuses?
+        .btn-group.published-btn-group
+          - @table.filter_statuses.each do |status|
+            = link_to t("globals."+status), send("m3_table_admin_"+ (@table.model) +"_path", params.merge(:filter_status => status)), class: 'btn btn-default' + (@table.filter_status == status ? " active" : "")
+
+.pull-left
+  %h1=t("globals.listing_" + (@table.model))
+
+%nav.pull-right.main-buttons
+  - if @table.additional_buttons?
+    - @table.additional_buttons.each do |additional_button|
+      = link_to additional_button[:name], additional_button[:url], :method => additional_button[:method],class: "btn btn-default btn-lg"
+
+  - if @table.filters? && !params["utf8"].present?
+    = link_to "#", :class => "btn btn-default btn-lg btn-primary", :id => "displayFilterButton" do
+      %i.glyphicon.glyphicon-search
+      = t("globals.search")
+
+
+    :javascript
+      $("#displayFilterButton").click(function(){
+        $(this).hide();
+        $("#filters").slideDown(function() {
+          $("#filters input").focus();
+        });
+        return false;
+      });
+
+
+  - if @table.enable_add_new
+    - if @table.row_has_locale or @table.filter_statuses?
+      - new_path = send("new_m3_table_admin_"+ (@table.singularized) +"_path", :filter_locale => @table.filter_locale)
+    - else
+      - new_path =send("new_m3_table_admin_"+ (@table.singularized) +"_path")
+
+    = link_to new_path, :class => "btn btn-success btn-lg" do
+      %i.glyphicon.glyphicon-plus
+      = t("admin.index.table.add_new")
+
+
+
+- if @table.filters?
+  .row
+    .col-sm-12
+      = render "m3_table_admin/table_admin/filters", :table => @table
+.row
+  .col-sm-12
+    = render "m3_table_admin/table_admin/table", :objects => @objects, :table => @table
+
+- if !@table.enable_pagination
+  = paginate @objects
+
+- if @table.enable_sorting
+  - rearrange_path = send("rearrange_admin_" + @table.pluralize + "_path")
+
+  :javascript
+
+    $('table#tableAdmin tbody').sortable().on( "sortbeforestop", function( event, ui ) {
+
+      var ids = [];
+
+      $("#tableAdmin input[type=hidden]").each(function() {
+        ids[ids.length] = $(this).val();
+      });
+
+      var postParams = {"filter_locale": "sl", "ids": ids };
+
+      $.post("#{rearrange_path}.json", postParams, function(data) { });
+
+
+    } );
+
+
+
+

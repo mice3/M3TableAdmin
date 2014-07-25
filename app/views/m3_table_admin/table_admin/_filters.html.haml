@@ -1,0 +1,30 @@
+#filters
+  = index_path = send("m3_table_admin_"+ (table.model) +"_path")
+  = form_tag index_path, :method => 'get', :class => "form-inline filters text-center narrow", :id => "filters" do
+
+    - if table.filter_locale?
+      = hidden_field_tag "filter_locale", table.filter_locale
+
+    - if table.filter_status?
+      = hidden_field_tag "filter_status", table.filter_status
+
+    - table.filters.each do |obj|
+      .form-controls
+        - if obj[:find_in].present?
+          = text_field_tag obj[:name], params[obj[:name]], :placeholder => t("globals.#{obj[:name]}"), :class => "form-control string"
+
+        / - elsif filter_temp[0] == "select"
+        /   = select_tag filter_temp[1], options_for_select(filter_temp[2], params[filter_temp[1]])
+        / - elsif filter_temp[0] == "date"
+        /   = text_field_tag filter_temp[1], params[filter_temp[1]], placeholder: filter_temp[1]
+        /   :javascript
+        /     $('##{filter_temp[1]}').datepicker({dateFormat: 'dd.mm.yy'});
+    .form-actions
+      %button.btn.btn-primary{:type => "submit"}
+        %i.glyphicon.glyphicon-search
+        = t("admin.table_admin.filters.search")
+
+
+- if !params["utf8"].present?
+  :javascript
+    $("#filters").hide()

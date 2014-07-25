@@ -1,0 +1,16 @@
+-# navigation styled for Bootstrap 3.0
+%nav.navbar.navbar-default.navbar-fixed-top
+  .col-sm-12
+    .navbar-header
+      .navbar-brand
+        = link_to "/" do
+          = "Logo goes here"
+          / = image_tag "logo.png"
+      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        = render 'layouts/m3_table_admin_/navigation_right_links'

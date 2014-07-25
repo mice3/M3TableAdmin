@@ -1,0 +1,50 @@
+$default-title-font: "Roboto", helvetica, arial, sans-serif;
+$fontSize: 13px;
+$fontSizeInput: 13px;
+$fontFamily: "Tahoma";
+
+$lineHeight: 22px;
+$colorWhite: white;
+$colorGray: #f1f1f1;
+$colorGrayBorder: #cfcfcf;
+$colorGrayFont: #9a9fa3;
+$radius: 3px;
+$colorBlack: #363f48;
+$colorRed: #ed6464;
+
+$colorBlue: #16b9e9;
+$color-blue: $colorBlue;
+$color-blue-hover: darken($color-blue, 7%);
+$colorSeaBlue: #4b699f;
+$color-seablue: $colorSeaBlue;
+
+$colorGreen: #52bc36;
+$colorYellow: #ddab42;
+
+$navbar-bg-color: #000;
+$navbar-color: #fff;
+
+
+
+// twitter bootstrap change variables
+$navbar-default-bg: white;
+$navbar-height: 66px;
+$grid-gutter-width: 20px;
+$border-radius-base: 0;
+$border-radius-large: 0;
+
+$defaultPadding: $grid-gutter-width / 2; // read TODO: from bootstrap
+$default-padding: $defaultPadding;
+$font-ratio: 1;
+
+$color-red: #ed6464;
+$color-green: #91c74d;
+$color-light-gray: #ebebeb;
+$color-light-gray-3: #eaeaea;
+$color-gray: #ccc;
+$color-gray-light: #f1f1f1;
+$color-gray-modal: #a3a3a3;
+$bg-color-fb: #6479ad;
+$bg-color-gplus: #d95433;
+$color-dark: #333;
+

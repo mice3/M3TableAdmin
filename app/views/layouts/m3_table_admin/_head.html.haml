@@ -1,0 +1,18 @@
+%meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+%title= content_for?(:title) ? yield(:title) : "M3 Table admin"
+%meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Table admin'}"}
+
+
+/ <link data-turbolinks-track="true" href="/assets/admin/application-5a27576251eaee0482e8d28e306d3196.css" media="all" rel="stylesheet" />
+/ <script data-turbolinks-track="true" src="/assets/admin/application-5aabd34168a0bd89bb37e68186f7012f.js"></script>
+
+= #raw "<!--"
+= stylesheet_link_tag "m3_table_admin_/admin/application", media: "all", "data-turbolinks-track" => true
+= javascript_include_tag "m3_table_admin_/admin/application", "data-turbolinks-track" => true
+= #raw "-->"
+
+= csrf_meta_tags
+
+- if protect_against_forgery?
+  = javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';"
+
