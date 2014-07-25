@@ -142,14 +142,14 @@ module M3TableAdmin
     def new
       @object = table_klass().new
 
-      render "m3_table_admin_/table_admin/new"
+      render "m3_table_admin/table_admin/new"
     end
 
     # # GET /amenities/1/edit
     def edit
       set_object()
 
-      render "m3_table_admin_/table_admin/edit"
+      render "m3_table_admin/table_admin/edit"
     end
 
     # POST /amenities
@@ -169,7 +169,7 @@ module M3TableAdmin
           format.html { redirect_to p, notice: t("admin.admin_controller.item_was_created") }
           format.js { render js: %(flash_message("success", "xxx")) }
         else
-          format.html { render "m3_table_admin_/table_admin/new", action: 'new' }
+          format.html { render "m3_table_admin/table_admin/new", action: 'new' }
           format.js { render  :partial  => "shared/form_errors",
                                 :locals   => {  :form_id  => "changePasswordFormContainer",
                                                 :errors   => @object.errors,
@@ -201,7 +201,7 @@ module M3TableAdmin
           p = table_index_path()
           format.html { redirect_to p, notice: t('ajax_messages.item_was_updated')}
         else
-          format.html { render "m3_table_admin_/table_admin/edit", action: 'edit' }
+          format.html { render "m3_table_admin/table_admin/edit", action: 'edit' }
         end
       end
     end
