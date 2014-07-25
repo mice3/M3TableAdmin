@@ -51,7 +51,7 @@
         :javascript
           $(function() {
             $( "#autocomplete_#{column['name'].to_s}_input" ).autocomplete({
-              source: "#{admin_autocomplete_path}?type=#{au_type}&select=#{au_select}",
+              source: "#{m3_table_admin_autocomplete_path}?type=#{au_type}&select=#{au_select}",
               minLength: 2,
               change: function(event,ui){
                 console.log(ui);
