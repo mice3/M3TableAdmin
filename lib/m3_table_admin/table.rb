@@ -83,6 +83,10 @@ module M3TableAdmin
       add_column( name, "dropdown", attributes)
     end
 
+    def add_json_column ( name, attributes = {})
+      add_column( name, "json", attributes)
+    end
+
     def add_filter ( name, find_in = "")
       if find_in.blank?
         @filters << { "name" => name}
