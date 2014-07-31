@@ -58,7 +58,7 @@
   .col-sm-12
     = render "m3_table_admin/table_admin/table", :objects => @objects, :table => @table
 
-- if !@table.enable_pagination
+- if @table.enable_pagination
   = paginate @objects
 
 - if @table.enable_sorting

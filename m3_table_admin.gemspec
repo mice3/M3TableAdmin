@@ -30,4 +30,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'simple_form', '~> 3.0.2'
   s.add_dependency 'kaminari', '~> 0.16.1'
   s.add_dependency 'bootstrap-wysihtml5-rails', '~> 0.3.2.100'
+  s.add_dependency 'countries', "0.9.3"
+  s.add_dependency "country_select", "~> 1.3.1"
 end
