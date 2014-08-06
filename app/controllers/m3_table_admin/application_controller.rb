@@ -27,7 +27,7 @@ module M3TableAdmin
 
       @return_objects = []
       if defined?(params[:type]) && defined?(params[:term]) && defined?(params[:select]) && defined?(params[:fk])
-        @return_objects = params[:type].camelize.constantize.filter_find_in(params[:term],[params[:select]]).select(" #{params[:select]} as value" ," #{params[:fk]}").limit(20)
+        @return_objects = params[:type].camelize.constantize.filter_find_in(params[:term],[params[:select]]).select(" #{params[:select]} as value" ," #{params[:fk]} as id").limit(20)
       end
 
       render json: @return_objects.to_json
