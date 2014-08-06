@@ -50,10 +50,11 @@
       - elsif "autocomplete" == column["type"]
         - au_type = column["attributes"]["class_name"]
         - au_select = column["attributes"]["select"]
+        - au_fk = column["attributes"]["fk"]
         :javascript
           $(function() {
             $( "#autocomplete_#{column['name'].to_s}_input" ).autocomplete({
-              source: "#{m3_table_admin_autocomplete_path}?type=#{au_type}&select=#{au_select}",
+              source: "#{m3_table_admin_autocomplete_path}?type=#{au_type}&select=#{au_select}&fk=#{au_fk}",
               minLength: 2,
               change: function(event,ui){
                 console.log(ui);
