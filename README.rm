@@ -1,6 +1,6 @@
 = M3TableAdmin
 
-{rdoc-image:https://dl.dropboxusercontent.com/u/3389098/m3_admin_index.jpg}[example]
+<img src="https://dl.dropboxusercontent.com/u/3389098/m3_admin_index.jpg">
 
 Add to your gem file:
 
