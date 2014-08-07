@@ -1,5 +1,7 @@
 = M3TableAdmin
 
+{rdoc-image:https://dl.dropboxusercontent.com/u/3389098/m3_admin_index.jpg}[example]
+
 Add to your gem file:
 
   gem 'm3_table_admin', :git => "git://github.com/mice3/M3TableAdmin.git"
