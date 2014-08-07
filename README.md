@@ -28,7 +28,7 @@ Create controller with table definition in: "controllers/m3_table_admin/users_co
           @table.add_column("email", "text", {"index" => true})
           @table.add_column("role", "text", {"index" => false})
         end
-  end
+    end
 
 
 Manually create navigation header file (and modify it to your needs) in: "views/layouts/m3_table_admin/_navigation.html.haml"
