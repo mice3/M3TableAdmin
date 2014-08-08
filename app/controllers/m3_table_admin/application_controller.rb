@@ -26,9 +26,21 @@ module M3TableAdmin
     def autocomplete
 
       @return_objects = []
-      if defined?(params[:type]) && defined?(params[:term]) && defined?(params[:select]) && defined?(params[:pk])
-        @return_objects = params[:type].camelize.constantize.filter_find_in(params[:term],[params[:select]]).select(" #{params[:select]} as value" ," #{params[:pk]} as id").limit(20)
+      if defined?(params[:type]) && defined?(params[:term])
+
+        #scope :m3_table_admin_autocomplete_scope, ->(id, user = nil) { where("email LIKE '%?%'", id)}
+
+        # def m3_table_admin_autocomplete_label
+
+        result = params[:type].camelize.constantize.m3_table_admin_autocomplete_scope(params[:term], nil).limit(20)
+
+        result.each do |obj|
+          @return_objects << {:id => obj.id, :value => obj.m3_table_admin_autocomplete_label}
+        end
+
       end
+
+
 
       render json: @return_objects.to_json
     end
@@ -53,7 +65,6 @@ module M3TableAdmin
 
 
     def index
-
 
       klass = table_klass
 

@@ -12,10 +12,10 @@
       - if @table.filter_statuses?
         .btn-group.published-btn-group
           - @table.filter_statuses.each do |status|
-            = link_to t("globals."+status), send("m3_table_admin_"+ (@table.model) +"_path", params.merge(:filter_status => status)), class: 'btn btn-default' + (@table.filter_status == status ? " active" : "")
+            = link_to t("m3_table_admin."+status), send("m3_table_admin_"+ (@table.model) +"_path", params.merge(:filter_status => status)), class: 'btn btn-default' + (@table.filter_status == status ? " active" : "")
 
 .pull-left
-  %h1=t("globals.listing_" + (@table.model))
+  %h1=t("m3_table_admin.listing_" + (@table.model))
 
 %nav.pull-right.main-buttons
   - if @table.additional_buttons?
@@ -25,7 +25,7 @@
   - if @table.filters? && !params["utf8"].present?
     = link_to "#", :class => "btn btn-default btn-lg btn-primary", :id => "displayFilterButton" do
       %i.glyphicon.glyphicon-search
-      = t("globals.search")
+      = t("m3_table_admin.search")
 
 
     :javascript
@@ -46,7 +46,7 @@
 
     = link_to new_path, :class => "btn btn-success btn-lg" do
       %i.glyphicon.glyphicon-plus
-      = t("admin.index.table.add_new")
+      = t("m3_table_admin.add_new")
 
 
 

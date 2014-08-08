@@ -11,7 +11,7 @@
     - table.filters.each do |obj|
       .form-controls
         - if obj[:find_in].present?
-          = text_field_tag obj[:name], params[obj[:name]], :placeholder => t("globals.#{obj[:name]}"), :class => "form-control string"
+          = text_field_tag obj[:name], params[obj[:name]], :placeholder => t("m3_table_admin.#{obj[:name]}"), :class => "form-control string"
 
         / - elsif filter_temp[0] == "select"
         /   = select_tag filter_temp[1], options_for_select(filter_temp[2], params[filter_temp[1]])
@@ -22,7 +22,7 @@
     .form-actions
       %button.btn.btn-primary{:type => "submit"}
         %i.glyphicon.glyphicon-search
-        = t("admin.table_admin.filters.search")
+        = t("m3_table_admin.search")
 
 
 - if !params["utf8"].present?

@@ -1,6 +1,6 @@
 - if defined?(@object.has_globalize) && @object.has_globalize
   %nav.locales.float-right
-    = link_to t('globals.edit'), '#', class: 'btn btn-primary edit-form active'
+    = link_to t('m3_table_admin.edit'), '#', class: 'btn btn-primary edit-form active'
     - (Settings['locales'] - %w(en)).each do |locale|
       = link_to locale, '#', class: 'btn btn-primary', data: { locale: locale }
 
@@ -28,6 +28,10 @@
         = f.input column["name"], {:iso_codes => true}
       - if "text" == column["type"]
         = f.input column["name"]
+      - elsif "date" == column["type"]
+        = f.input column["name"], as: :datepicker
+      - elsif "datetime" == column["type"]
+        = f.input column["name"], as: :datetimepicker
       - elsif "wysihtml5" == column["type"]
         = f.input column["name"], as: :text
 
@@ -35,7 +39,9 @@
           $("##{@table.singularized+"_"+column['name']}").wysihtml5();
       - elsif "checkbox" == column["type"]
         = f.input column["name"], as: :check_boxes, collection: column["attributes"]["collection"]
-      - elsif "dropdown" == column["type"]
+      - elsif "association" == column["type"]
+        = f.association column["name"].to_sym
+      - elsif "select" == column["type"]
         - if column["attributes"].has_key?("label_method")
           = f.input column["name"], collection: column["attributes"]["collection"], label_method: lambda { |obj| obj[column["attributes"]["label_method"]] }, value_method: lambda { |obj| obj[column["attributes"]["value_method"]] }
         - else
@@ -51,36 +57,12 @@
         - au_type = column["attributes"]["class_name"]
         - au_select = column["attributes"]["select"]
         - au_pk = column["attributes"]["pk"]
-        :javascript
-          $(function() {
-            $( "#autocomplete_#{column['name'].to_s}_input" ).autocomplete({
-              source: "#{m3_table_admin_autocomplete_path}?type=#{au_type}&select=#{au_select}&pk=#{au_pk}",
-              minLength: 2,
-              change: function(event,ui){
-                console.log(ui);
-                $(this).val((ui.item ? ui.item.value : ""));
-                $("##{@object.class.to_s.underscore.downcase}_#{column['name'].to_sym}_id").val((ui.item ? ui.item.id : ""));
 
-              },   //HERE - make sure to add the comma after your select
-                response: function(event, ui) {
-                  if (!ui.content.length) {
-                    var noResult = { value:"",label:"No results found" };
-                    ui.content.push(noResult);
-                  }
-                }
-            });
-          });
-        - @relation_object = @object.send("#{column['name']}")
-        - if @relation_object
-          - @relation_object_value = @relation_object.send("#{au_select}")
-        - else
-          - @relation_object_value = ""
+        = f.input column["name"], as: :autocomplete
 
-        = f.hidden_field "#{column['name'].to_sym}_id"
-        = f.input "autocomplete_#{column['name'].to_s}_input", :input_html => { :value => @relation_object_value }, :label => "#{column['name'].to_s.humanize}", :placeholder => "#{column['name'].to_s.humanize}", as: :fake
 
 
     .form-actions
       %button{:type => "submit", :class => "btn btn-primary btn-lg"}
-        = t("globals.submit")
+        = t("m3_table_admin.submit")
 
