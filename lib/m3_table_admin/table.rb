@@ -2,13 +2,19 @@ require 'active_support/inflector'
 
 module M3TableAdmin
   class Table
-    attr_accessor :columns, :filters, :additional_buttons, :filter_statuses, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type
+    attr_accessor :columns, :filters, :additional_buttons, :filters_statuses, :filters_value, :filters_array, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type
 
     def initialize(model)
       @columns = Array.new
       @filters = Array.new
       @additional_buttons = Array.new
       @filter_statuses = Array.new
+
+      @filters_value = {}
+      @filters_array = {}
+
+
+
       @filter_status = ""
       @model = model
       @enable_destroy = true
@@ -155,5 +161,19 @@ module M3TableAdmin
     def sort_type?
       !self.sort_type.blank?
     end
+
+    def add_filters(name, values)
+      if !@filters_array
+        @filters_array = {}
+        @filters_value = {}
+      end
+
+      @filters_array[name] = values
+      @filters_value[name] = values.first
+
+    end
+
+
+
   end
 end

@@ -26,9 +26,21 @@ module M3TableAdmin
     def autocomplete
 
       @return_objects = []
-      if defined?(params[:type]) && defined?(params[:term]) && defined?(params[:select]) && defined?(params[:pk])
-        @return_objects = params[:type].camelize.constantize.filter_find_in(params[:term],[params[:select]]).select(" #{params[:select]} as value" ," #{params[:pk]} as id").limit(20)
+      if defined?(params[:type]) && defined?(params[:term])
+
+        #scope :m3_table_admin_autocomplete_scope, ->(id, user = nil) { where("email LIKE '%?%'", id)}
+
+        # def m3_table_admin_autocomplete_label
+
+        result = params[:type].camelize.constantize.m3_table_admin_autocomplete_scope(params[:term], nil).limit(20)
+
+        result.each do |obj|
+          @return_objects << {:id => obj.id, :value => obj.m3_table_admin_autocomplete_label}
+        end
+
       end
+
+
 
       render json: @return_objects.to_json
     end
@@ -54,11 +66,26 @@ module M3TableAdmin
 
     def index
 
-
       klass = table_klass
 
       q = klass
-      if @table.filters?
+
+
+      if @table.filters_array
+        #raise @table.filters_array.to_json
+        @table.filters_array.each do |key, values|
+          if params["filter_" + key]
+            @table.filters_value[key] = params["filter_" + key]
+          end
+          if @table.filters_value[key] != 'all'
+            q = q.where(key + " = ?", @table.filters_value[key])
+          end
+
+        end
+      end
+
+
+      if @table.filters? and false
         @table.filters.each do |filter|
           if defined? filter[:find_in]
             q = q.filter_find_in(params[filter[:name]], filter[:find_in])
