@@ -7,7 +7,7 @@
             ID
         - table.index_columns.each do |column|
           %th
-            = t("globals.#{column["name"]}")
+            = t("m3_table_admin.#{column["name"]}")
         %th.buttons
 
     %tbody
@@ -57,9 +57,9 @@
             - if table.enable_edit
               = link_to edit_path, :class => "btn btn-default btn-xs" do
                 %i.glyphicon.glyphicon-pencil
-                = t("globals.edit")
+                = t("m3_table_admin.edit")
 
             - if table.enable_destroy
-              = link_to [:m3_table_admin, object], :method => :delete, :data => { :confirm => t("globals.confirm_delete") }, :class => "btn btn-default btn-danger btn-xs" do
+              = link_to [:m3_table_admin, object], :method => :delete, :data => { :confirm => t("m3_table_admin.confirm_delete") }, :class => "btn btn-default btn-danger btn-xs" do
                 %i.glyphicon.glyphicon-trash
-                = t("globals.destroy")
+                = t("m3_table_admin.destroy")

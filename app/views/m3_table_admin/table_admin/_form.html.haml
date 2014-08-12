@@ -33,10 +33,20 @@
       - elsif "datetime" == column["type"]
         = f.input column["name"], as: :datetimepicker
       - elsif "wysihtml5" == column["type"]
-        = f.input column["name"], as: :text
-
+        .wysihtml5-container
+          = f.input column["name"], as: :text
         :javascript
-          $("##{@table.singularized+"_"+column['name']}").wysihtml5();
+          $("##{@table.singularized+"_"+column['name']}").wysihtml5({
+                "events": {
+                    "focus": function() {
+                        $("##{@table.singularized+"_"+column['name']}").closest(".wysihtml5-container").find(".wysihtml5-toolbar").slideDown();
+                    },
+                    "blur": function() {
+                        $("##{@table.singularized+"_"+column['name']}").closest(".wysihtml5-container").find(".wysihtml5-toolbar").slideUp();
+                    }
+                }
+            });
+
       - elsif "checkbox" == column["type"]
         = f.input column["name"], as: :boolean
         =# f.input column["name"], as: :check_boxes, collection: column["attributes"]["collection"]
@@ -58,8 +68,14 @@
         - au_type = column["attributes"]["class_name"]
         - au_select = column["attributes"]["select"]
         - au_pk = column["attributes"]["pk"]
-
         = f.input column["name"], as: :autocomplete
+      - elsif "attachment"
+        = f.input column["name"]
+        - if @object and @object.send(column["name"]).present?
+          .attachment-container
+            = image_tag @object.send(column["name"], :thumb)
+
+
 
 
 

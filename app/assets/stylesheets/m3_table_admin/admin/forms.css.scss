@@ -16,6 +16,19 @@ form {
   padding-bottom: $default-padding;
   margin: 0 0 20px;
   overflow: auto;
+  .wysihtml5-container textarea{
+
+  }
+  .wysihtml5-toolbar{
+    display: none;
+  }
+
+  .attachment-container {
+    margin-bottom: $grid-gutter-width;
+    @extend .col-md-offset-2;
+    padding-left: 4px;
+    margin-top: - ($grid-gutter-width / 2)
+  }
 
   textarea.simple-text-area {
     resize: none;
@@ -54,6 +67,7 @@ form fieldset{
 form .hint {
   display:none!important;
 }
+
 
 
 .browser-firefox {
