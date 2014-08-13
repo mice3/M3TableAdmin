@@ -5,6 +5,24 @@
       = link_to locale, '#', class: 'btn btn-primary', data: { locale: locale }
 
 = simple_form_for [:m3_table_admin, @object], html:{ class: "form-horizontal"} do |f|
+
+
+  .modal.fade#imyModal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+            %span.sr-only Close
+          %h4.modal-title Modal title
+        .modal-body
+          %p One fine body …
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
+          %button.btn.btn-primary{type: "button"} Save changes
+
+
+
   .form-inputs
     - if defined?(@object.has_globalize) && @object.has_globalize
       - (Settings['locales'] - %w(en)).each do |locale|
@@ -36,13 +54,55 @@
         .wysihtml5-container
           = f.input column["name"], as: :text
         :javascript
+
+          var customTemplates = {
+                  custombuttons: function(customOptions) {
+                      var size = (customOptions.options && customOptions.options.size) ? ' btn-'+customOptions.options.size : '';
+                      return "<li>" +
+                      "<a class='btn btn-default' title='my window' tabindex='-1' data-toggle='modal' data-target='#imyModal' data-id='0' class='open-dialog'>" +
+                      "<span class='glyphicon glyphicon-comment'></span>" +
+                      "</a>" +
+                      "</li>";
+                  },
+                  image: function(locale){
+                      var lib = $("#img-library").html();
+                      lib = "this is library";
+                      //this is a modified copy of https://github.com/Waxolunist/bootstrap3-wysihtml5-bower/blob/master/src/templates/image.hbs
+                      return [
+                          '<li>'
+                          ,'<div class="bootstrap-wysihtml5-insert-image-modal modal fade">'
+                          ,'<div class="modal-dialog">'
+                          ,'<div class="modal-content">'
+                          ,'<div class="modal-header">'
+                          ,'<a class="close" data-dismiss="modal">&times;</a>'
+                          ,'<h3>Insert image</h3>'
+                          ,'</div>'
+                          ,'<div class="modal-body img-library">'
+                          ,lib
+                          ,'</div>'
+                          ,'</div>'
+                          ,'</div>'
+                          ,'</div>'
+                          ,'<a class="btn btn-sm btn-default" data-wysihtml5-command="insertImage" title="Insert image" tabindex="-1" style="margin-left:-4px">'
+                          ,'<span class="glyphicon glyphicon-picture"></span>'
+                          ,'</a>'
+                          ,'</li>'
+                      ].join('');
+                  }
+              };
+
           $("##{@table.singularized+"_"+column['name']}").wysihtml5({
+                "toolbar": {
+                            "custombuttons": true
+                        },
+                        customTemplates: customTemplates,
+
                 "events": {
                     "focus": function() {
                         $("##{@table.singularized+"_"+column['name']}").closest(".wysihtml5-container").find(".wysihtml5-toolbar").slideDown();
                     },
                     "blur": function() {
-                        $("##{@table.singularized+"_"+column['name']}").closest(".wysihtml5-container").find(".wysihtml5-toolbar").slideUp();
+                        //$("##{@table.singularized+"_"+column['name']}").closest(".wysihtml5-container").find(".wysihtml5-toolbar").slideUp();
                     }
                 }
             });

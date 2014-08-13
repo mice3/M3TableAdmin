@@ -65,12 +65,13 @@ form {
     border: 1px solid $color-light-gray-3;
     height: 40px; line-height: 40px;
     line-height: 15px;
+    max-width:300px;
 
   }
 
 
   textarea.text {
-    height:200px;
+    height:300px;
   }
   .input-container {
     input.boolean, input.check_boxes {
