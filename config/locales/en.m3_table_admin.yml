@@ -1,5 +1,6 @@
 en:
   m3_table_admin:
+    deleted: "Deleted"
     destroy: "Destroy"
     confirm_delete: "Are you shure you want to delete it"
     search: "Search"
@@ -7,3 +8,7 @@ en:
     show: "Show"
     edit: "Edit"
     submit: "Submit"
+    add_new: "Add new"
+
+
+
