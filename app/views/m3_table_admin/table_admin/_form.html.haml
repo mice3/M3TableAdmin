@@ -129,7 +129,7 @@
         - au_select = column["attributes"]["select"]
         - au_pk = column["attributes"]["pk"]
         = f.input column["name"], as: :autocomplete
-      - elsif "attachment"
+      - elsif "attachment" == column["type"]
         = f.input column["name"]
         - if @object and @object.send(column["name"]).present?
           .attachment-container
