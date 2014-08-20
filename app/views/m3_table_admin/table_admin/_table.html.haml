@@ -30,7 +30,7 @@
           - table.index_columns.each do |column|
             %td
               - if "autocomplete" == column["type"]
-                - associated_object = object.send(column["attributes"]["class_name"])
+                - associated_object = object.send(column["name"])
                 - if associated_object
                   - column_value = associated_object[column["attributes"]["select"]]
                 - else

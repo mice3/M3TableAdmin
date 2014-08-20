@@ -56,13 +56,12 @@ module M3TableAdmin
       @columns << { "name" => name, "type" => type, "attributes" => attributes}
     end
 
-    def add_autocomplete_column ( name, class_name = "", select = "name", pk = "id", attributes = {})
+    def add_autocomplete_column ( name, select = "name", attributes = {})
       if class_name.blank?
         class_name = name
       end
-      attributes["class_name"] = class_name
+
       attributes["select"] = select
-      attributes["pk"] = pk
       add_column( name, "autocomplete", attributes )
     end
 

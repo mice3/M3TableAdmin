@@ -6,11 +6,12 @@ class AutocompleteInput < SimpleForm::Inputs::StringInput
     path = template.m3_table_admin_autocomplete_path
     relation_object_name = nil
 
+    relation_object_type = table.camelize.constantize.reflect_on_association(relation_table.to_sym).class_name
+
     if object.send(relation_table) != nil
       rel = object.send(relation_table)
       relation_object_name = rel.m3_table_admin_autocomplete_label
     end
-
 
     textfield_id = "autocomplete_"+table+"_#{attribute_name}_id"
     out = ""
@@ -23,7 +24,7 @@ class AutocompleteInput < SimpleForm::Inputs::StringInput
                     setTimeout(function() { $( "#'+ textfield_id +'" ).select()  }, 100);
                   });
                 $( "#'+ textfield_id +'" ).autocomplete({
-                  source: "'+ path + '?type='+ relation_table +'",
+                  source: "'+ path + '?type='+ relation_object_type +'",
                   minLength: 2,
                   autoFocus: true,
                   change: function(event,ui){

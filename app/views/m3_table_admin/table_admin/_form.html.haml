@@ -125,9 +125,7 @@
         .input-container-with-left-margin
           =image_tag @object.image, :style => "max-width: 200px;margin-bottom:20px"
       - elsif "autocomplete" == column["type"]
-        - au_type = column["attributes"]["class_name"]
         - au_select = column["attributes"]["select"]
-        - au_pk = column["attributes"]["pk"]
         = f.input column["name"], as: :autocomplete
       - elsif "attachment" == column["type"]
         = f.input column["name"]
