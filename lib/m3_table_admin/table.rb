@@ -57,10 +57,6 @@ module M3TableAdmin
     end
 
     def add_autocomplete_column ( name, select = "name", attributes = {})
-      if class_name.blank?
-        class_name = name
-      end
-
       attributes["select"] = select
       add_column( name, "autocomplete", attributes )
     end
