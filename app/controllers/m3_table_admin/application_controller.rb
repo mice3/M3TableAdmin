@@ -35,11 +35,7 @@ module M3TableAdmin
 
         # def m3_table_admin_autocomplete_label
 
-        result = params[:type].camelize.constantize.m3_table_admin_autocomplete_scope(params[:term], nil).limit(20)
-
-        result.each do |obj|
-          @return_objects << {:id => obj.id, :value => obj.m3_table_admin_autocomplete_label}
-        end
+        @return_objects = params[:type].camelize.constantize.m3_table_admin_autocomplete_scope(params[:term], nil).limit(20)
 
       end
 
