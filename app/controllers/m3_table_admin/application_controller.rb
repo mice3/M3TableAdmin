@@ -1,9 +1,12 @@
 module M3TableAdmin
   class ApplicationController < ActionController::Base
+    include AuthorizationControllerConcern
     protect_from_forgery
     respond_to :html
 
     layout :detect_popup_layout
+
+    require_authorization
 
     def detect_popup_layout
       if params[:layout]

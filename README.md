@@ -19,9 +19,9 @@ Create routes for viewing and editing your tables (this will add view/edit optio
 Create controller with table definition in: "controllers/m3_table_admin/users_controller.rb"
 
     class M3TableAdmin::UsersController < M3TableAdmin::ApplicationController
-    
+
       before_action :set_table
-    
+
       private
         def set_table
           @table = M3TableAdmin::Table.new("users")
@@ -30,10 +30,16 @@ Create controller with table definition in: "controllers/m3_table_admin/users_co
         end
     end
 
+If a model is used in the autocomplete input, you must add inside your model
+
+  def m3_table_admin_autocomplete_label
+    email #this is the name of the field, that you want to display
+  end
+
 
 Manually create navigation header file (and modify it to your needs) in: "views/layouts/m3_table_admin/_navigation.html.haml"
-  
-  
+
+
     %nav.navbar.navbar-default.navbar-fixed-top
       .col-sm-12
         .navbar-header
@@ -47,3 +53,34 @@ Manually create navigation header file (and modify it to your needs) in: "views/
               = link_to "Users", m3_table_admin_users_path
             %li
               = link_to "Logout?", "#"
+
+For authorization purposes is added a concern and a method require_authorization. Those two things must be defined.
+the AuthorizationControllerConcern must de created inside controllers/concerns .Inside this file a function named require_authorization must
+also be defined. Example
+  module AuthorizationControllerConcern
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      # Runs authorization check for current user and restricts access
+      # for unauthorized roles.
+      def require_authorization(options={})
+        self.class_eval("
+          before_filter :handle_authorization, #{options}
+          def handle_authorization
+            not_authorized unless authorized?
+          end
+        ")
+      end
+    end
+
+    # Checks if current user is authorized for controller/action.
+    def authorized?
+      true
+    end
+
+    # Called when access is restricted.
+    def not_authorized
+      redirect_to root_path
+    end
+
+  end
