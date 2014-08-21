@@ -36,6 +36,12 @@ If a model is used in the autocomplete input, you must add inside your model
     email #this is the name of the field, that you want to display
   end
 
+And there must be defined also a scope.
+
+  scope :m3_table_admin_autocomplete_scope, ->(q, user = nil) { where("email LIKE ?", "%#{q}%").select("email as value, id as id") }
+
+
+
 
 Manually create navigation header file (and modify it to your needs) in: "views/layouts/m3_table_admin/_navigation.html.haml"
 
@@ -84,3 +90,38 @@ also be defined. Example
     end
 
   end
+
+
+Data types that can be used:
+  add_column ( name, type = "text", attributes = {})
+  add_autocomplete_column ( name, select = "name", attributes = {})
+  add_timestamp_column ( name, format, attributes = {})
+  add_wysihtml5_column ( name, attributes = {}) #rich text editor
+  add_checkbox_column ( name, collection, attributes = {})
+  add_country_column ( name, attributes = {})
+  add_dropdown_column ( name, collection, attributes = {})
+  add_json_column ( name, attributes = {})
+
+You can also add filters
+  add_filter ( name, find_in = "")
+
+On top you can add additional buttons
+  add_additional_button ( name, url, method )
+
+Other things that can be customized are (After you define a new table @table = M3TableAdmin::Table.new("users")):
+  Disable/enable the destroy ability at the end of the index table
+  @table.enable_destroy = true #default true
+  Disable/enable adding of new values
+  @table.enable_add_new = true #default true
+  Disable/enable the edit ability at the end of the index table
+  @table.enable_edit = true #default true
+  Disable/enable showing of ids at the beginning of the index table
+  @table.show_ids = false #default false
+  Disable/enable pagination of the index table
+  @table.enable_pagination = true #default true
+  Disable/enable sorting of the index table
+  @table.enable_sorting = false #default true
+  Add filter just those locales (the value) in connection with @row_has_locale
+  @table.filter_locale = false #default true
+  Sorting of index table ASC or DESC
+  @table.sort_type = "DESC" #default DESC
