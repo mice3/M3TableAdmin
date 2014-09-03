@@ -37,9 +37,14 @@
                   - column_value = ""
               - else
                 - column_value = object.send(column["name"])
-                - if "timestamp" == column["type"]
+                - if "date" == column["type"]
                   - if column_value
-                    - column_value = l column_value, :format => column["attributes"]["format"]
+                    - column_value = l column_value, :format => "%Y-%m-%d"
+                  - else
+                    - column_value = ""
+                - elsif "datetime" == column["type"]
+                  - if column_value
+                    - column_value = l column_value, :format => "%Y-%m-%d %I:%M"
                   - else
                     - column_value = ""
               - if index == 0

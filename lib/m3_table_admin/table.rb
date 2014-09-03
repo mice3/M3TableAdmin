@@ -62,9 +62,12 @@ module M3TableAdmin
       add_column( name, "autocomplete", attributes )
     end
 
-    def add_timestamp_column ( name, format, attributes = {})
-      attributes["format"] = format
-      add_column( name, "timestamp", attributes)
+    def add_datetime_column ( name, attributes = {})
+      add_column( name, "datetime", attributes)
+    end
+
+    def add_date_column ( name, attributes = {})
+      add_column( name, "date", attributes)
     end
 
     def add_wysihtml5_column ( name, attributes = {})

@@ -41,8 +41,6 @@
     - if @table.filter_locale?
       = hidden_field_tag @table.singularized + "[locale]", @table.filter_locale
     - @table.form_columns.each do |column|
-      - if "country" == column
-        = f.input column["name"], {:iso_codes => true}
       - if "text" == column["type"]
         = f.input column["name"]
       - elsif "date" == column["type"]
@@ -117,7 +115,7 @@
         - else
           = f.input column["name"], collection: column["attributes"]["collection"], prompt: column["attributes"]["prompt"]
       - elsif "country" == column["type"]
-        = f.input column["name"], {:iso_codes => true}
+        = f.input column["name"]
       - elsif "json" == column["type"]
         = f.input column["name"], as: :text
       - elsif "image" == column["type"] && @object.image?
