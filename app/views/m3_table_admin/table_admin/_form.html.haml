@@ -115,7 +115,7 @@
         - else
           = f.input column["name"], collection: column["attributes"]["collection"], prompt: column["attributes"]["prompt"]
       - elsif "country" == column["type"]
-        = f.input column["name"]
+        = f.input column["name"], as: :select
       - elsif "json" == column["type"]
         = f.input column["name"], as: :text
       - elsif "image" == column["type"] && @object.image?
