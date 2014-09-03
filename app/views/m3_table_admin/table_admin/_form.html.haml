@@ -3,7 +3,6 @@
     = link_to t('m3_table_admin.edit'), '#', class: 'btn btn-primary edit-form active'
     - (Settings['locales'] - %w(en)).each do |locale|
       = link_to locale, '#', class: 'btn btn-primary', data: { locale: locale }
-
 = simple_form_for [:m3_table_admin, @object], html:{ class: "form-horizontal"} do |f|
 
 
@@ -132,10 +131,34 @@
         - if @object and @object.send(column["name"]).present?
           .attachment-container
             = image_tag @object.send(column["name"], :thumb)
+      - elsif "nested_fields" == column["type"]
+        - nested_form = ""
+        - nested_child_index = 0
+        = f.simple_fields_for column['name'].to_sym do |i|
+          - nested_form = i
+          - nested_child_index = i.options[:child_index]
+          - if i.object.new_record?
+            %h4= "Add new #{column["name"]}"
+          - unless i.object.new_record?
+            = render 'm3_table_admin/table_admin/nested_fields', :f => nested_form, :fields => column["attributes"]["fields"]
+        = hidden_field_tag "nested_form_child_id", nested_child_index
+        = link_to "New #{column["name"]}",'#',:class => "new_#{column["name"]}_append"
+        :javascript
+          $(".new_#{column["name"]}_append").click(function() {
+            var html = '#{escape_javascript( render :partial => 'm3_table_admin/table_admin/nested_fields', :locals => {:f => nested_form, :fields => column["attributes"]["fields"]})}';
+            var find = '_'+#{nested_child_index}+'_';
+            var re = new RegExp(find, 'g');
+            var replace_string = '_'+$('#nested_form_child_id').val()+'_'
+            html = html.replace(re, replace_string);
 
-
-
-
+            var find = '[['+#{nested_child_index}+']]';
+            var re = new RegExp(find, 'g');
+            var replace_string = ''+$('#nested_form_child_id').val()+']'
+            html = html.replace(re, replace_string);
+            $(this).before(html);
+            $('#nested_form_child_id').val(parseInt($('#nested_form_child_id').val())+1);
+            return false;
+          });
 
     .form-actions
       %button{:type => "submit", :class => "btn btn-primary btn-lg"}

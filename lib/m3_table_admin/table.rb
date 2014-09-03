@@ -2,13 +2,14 @@ require 'active_support/inflector'
 
 module M3TableAdmin
   class Table
-    attr_accessor :columns, :filters, :additional_buttons, :filters_statuses, :filters_value, :filters_array, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type
+    attr_accessor :columns, :filters, :additional_buttons, :filters_statuses, :nested_field_models, :filters_value, :filters_array, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type
 
     def initialize(model)
       @columns = Array.new
       @filters = Array.new
       @additional_buttons = Array.new
       @filter_statuses = Array.new
+      @nested_field_models = Array.new
 
       @filters_value = {}
       @filters_array = {}
@@ -95,6 +96,11 @@ module M3TableAdmin
       else
         @filters << { "name" => name, "find_in" => find_in}
       end
+    end
+
+    def add_nested_fields ( name, attributes = {})
+      @nested_field_models << name
+      add_column( name, "nested_fields", attributes)
     end
 
     def filters?

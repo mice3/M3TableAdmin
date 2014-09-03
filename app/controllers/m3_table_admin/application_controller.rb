@@ -168,12 +168,19 @@ module M3TableAdmin
     def new
       @object = table_klass().new
 
+      @table.nested_field_models.each do |nested_field_model|
+        @object.send(nested_field_model).build
+      end
+
       render "m3_table_admin/table_admin/new"
     end
 
     # # GET /amenities/1/edit
     def edit
       set_object()
+      @table.nested_field_models.each do |nested_field_model|
+        @object.send(nested_field_model).build
+      end
 
       render "m3_table_admin/table_admin/edit"
     end
