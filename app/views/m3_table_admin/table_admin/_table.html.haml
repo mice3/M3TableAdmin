@@ -59,6 +59,9 @@
 
 
           %td.buttons
+            - if table.additional_table_buttons
+              = render "index_object_buttons", :object => object
+
             - if table.enable_edit
               = link_to edit_path, :class => "btn btn-default btn-xs" do
                 %i.glyphicon.glyphicon-pencil

@@ -1,0 +1,11 @@
+!!! 5
+%html
+  %head
+    = render 'layouts/m3_table_admin/head'
+  %body
+    = render 'layouts/m3_table_admin/navigation'
+
+    .col-sm-12
+      = yield
+
+    = raw yield(:js_foot)

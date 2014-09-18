@@ -133,8 +133,15 @@ module M3TableAdmin
     def show
       set_object()
 
-      if !template_exists?("show", _prefixes, false)
-        render "m3_table_admin/table_admin/show"
+      respond_to do |format|
+        format.pdf do
+          render :pdf => "show", :template => "m3_table_admin/#{@object.class.name.downcase.pluralize}/show.pdf.haml", :layout => 'paper'
+        end
+        format.html do
+          if !template_exists?("show", _prefixes, false)
+            render "m3_table_admin/table_admin/show"
+          end
+        end
       end
     end
 
