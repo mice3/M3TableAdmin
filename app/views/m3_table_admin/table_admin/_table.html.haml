@@ -50,8 +50,12 @@
               - if index == 0
                 - if !column_value
                   - column_value = "[No name]"
-
                 = link_to column_value, edit_path
+              - elsif "autocomplete" == column["type"]
+                - if associated_object
+                  = link_to column_value, "#{associated_object.class.to_s.pluralize.underscore}/#{associated_object.id}/edit"
+                - else
+                  = column_value
               - else
                 = column_value
 

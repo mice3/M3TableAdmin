@@ -14,8 +14,6 @@ module M3TableAdmin
       @filters_value = {}
       @filters_array = {}
 
-
-
       @filter_status = ""
       @model = model
       @enable_destroy = true
