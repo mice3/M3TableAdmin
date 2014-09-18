@@ -2,7 +2,7 @@ require 'active_support/inflector'
 
 module M3TableAdmin
   class Table
-    attr_accessor :columns, :filters, :additional_buttons, :filters_statuses, :nested_field_models, :filters_value, :filters_array, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type, :additional_table_buttons, :custom_header
+    attr_accessor :columns, :filters, :additional_buttons, :filter_statuses, :nested_field_models, :filters_value, :filters_array, :filter_status, :model, :enable_destroy, :enable_add_new, :show_ids, :enable_edit, :enable_pagination, :enable_sorting, :row_has_locale, :filter_locale, :sort_type, :additional_table_buttons, :custom_header
 
     def initialize(model)
       @columns = Array.new
