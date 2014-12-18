@@ -3,7 +3,7 @@ class AutocompleteInput < SimpleForm::Inputs::StringInput
   def input
     table = object_name
     relation_table = attribute_name.to_s
-    path = template.autocomplete_path
+    path = template.m3_table_admin_autocomplete_path
     relation_object_name = nil
     is_nested = false
 
@@ -20,7 +20,7 @@ class AutocompleteInput < SimpleForm::Inputs::StringInput
 
     if object.send(relation_table) != nil
       rel = object.send(relation_table)
-      relation_object_name = rel.autocomplete_label
+      relation_object_name = rel.m3_table_admin_autocomplete_label
     end
 
     textfield_id = "autocomplete_"+table+"_#{attribute_name}_id"
