@@ -84,12 +84,17 @@ module M3TableAdmin
       end
 
 
-      if @table.filters? and false
+      if @table.filters?
         @table.filters.each do |filter|
-          if defined? filter[:find_in]
-            q = q.filter_find_in(params[filter[:name]], filter[:find_in])
-          else
-            q = q.filter_select_by(params[filter[:name]], filter[:name], "=")
+          if defined? filter['find_in']
+            search_string=''
+            filter['find_in'].each_with_index do |attribute, i|
+              search_string += "#{attribute} ILIKE '%#{params[filter['name']]}%'"
+              if i != filter['find_in'].count-1
+                search_string += " OR "
+              end
+            end
+            q = q.where(search_string)
           end
         end
       end
